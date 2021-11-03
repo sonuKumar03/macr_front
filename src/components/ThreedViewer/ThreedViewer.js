@@ -8,18 +8,18 @@ function ThreedViewer() {
 
     if (marmoset) {
 
-      // var params = { autoStart: false, fullFrame: true, pagePreset: false }
-      // var viewer = marmoset.embed("Room_2.mview", params);
-      // // const height  = container.current.getBoundingClientRect().height;
-      // // const width = container.current.getBoundingClientRect().width;
-      // // console.log(height,width);
-      // // var viewer = new marmoset.WebViewer("Room_2.mview", params);
-      // marmoset.noUserInterface = true; //please be considerate
-      // container.current.appendChild(viewer.domRoot);
-      // // viewer.loadScene();
+      var params = { autoStart: false, fullFrame: true, pagePreset: false }
+      var viewer = marmoset.embed("Room_2.mview", params);
+      // const height  = container.current.getBoundingClientRect().height;
+      // const width = container.current.getBoundingClientRect().width;
+      // console.log(height,width);
+      // var viewer = new marmoset.WebViewer("Room_2.mview", params);
+      marmoset.noUserInterface = true; //please be considerate
+      container.current.appendChild(viewer.domRoot);
+      // viewer.loadScene();
     }
     return () => {
-      // viewer.unload();
+      viewer.unload();
       // setRandom(Math.random())
     }
   }, [])

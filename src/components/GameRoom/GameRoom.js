@@ -22,7 +22,7 @@ function GameRoom(props) {
         </div>
       </div>
         </Container>
-    )
+    ) 
 }
 const mapStateToProps = (state)=>{
   return {

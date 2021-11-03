@@ -12,7 +12,6 @@ function* fetchChapterQuestions(action) {
             userResponse:null
           }
         })
-        console.log(temp);
         yield put(saveChapter({questions:[...temp],...rest}));
     }catch(err){
       console.log(err);

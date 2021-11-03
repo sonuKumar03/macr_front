@@ -398,3 +398,4 @@ export const abi = [
 
 export const tokenContractAddress ="0x495f947276749Ce646f68AC8c248420045cb7b5e";
 export const home = "https://thecollectorchronicles.io";
+export const client_token ="0xf96b8708ade79c783934192E270aA9a8822A785D";

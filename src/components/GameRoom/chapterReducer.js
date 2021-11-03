@@ -1,11 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const createQuestion = (question)=>{
-    return {
-        ...question,
-        userResponse:null,
-    }
-}
+
 
 const initialState = []
 export const chapterSlice = createSlice({

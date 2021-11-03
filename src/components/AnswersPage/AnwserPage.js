@@ -1,15 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { connect } from 'react-redux'
 import { Container, Grid, Header, Segment } from 'semantic-ui-react'
-import { questionSelector } from '../GameRoom/chapterReducer'
 import './Answer.css'
-export default function AnserPage() {
-    const Questions = useSelector(questionSelector)
-    let correct = Questions.filter(q=>q.IsvalidAnswer)?.length;
-    let wrong = Questions.filter(q=>!q.IsvalidAnswer)?.length;
+function AnserPage(props) {
+    const {answers }= props;
+
+    let correct = answers.filter(q=>q.correct)?.length;
+    let wrong =answers.filter(q=>!q.correct)?.length;
+
     return (
-      <Container >
-      <Header textAlign="center" dividing size="huge" color="teal" > Answers  </Header>
+      <Container style={{marginTop:'2.5rem'}} >
+      <Header  dividing size="huge" color="teal" > Answers  </Header>
       <Grid>
         <Grid.Row>
             <Grid.Column width="2">
@@ -21,10 +22,10 @@ export default function AnserPage() {
         </Grid.Row>
         </Grid>
 
-      {Questions.map((q, i) => (
+      {answers.map((q, i) => (
         <Segment raised key={i}>
           <Grid>
-            <Grid.Row verticalAlign="middle" color={q.IsvalidAnswer?'green':'red'} >
+            <Grid.Row verticalAlign="middle" color={q.correct?'green':'red'} >
               <Grid.Column width="3" stretched>
                   Question :
               </Grid.Column>
@@ -37,7 +38,7 @@ export default function AnserPage() {
                   Your Response :
               </Grid.Column>
               <Grid.Column width="11">
-                {q.userResponse?.value}
+                {q.userResponse}
               </Grid.Column>
             </Grid.Row>
             <Grid.Row verticalAlign="middle" >
@@ -54,3 +55,13 @@ export default function AnserPage() {
         </Container>
     )
 }
+
+const mapStateToProps = (state)=>{
+  return {
+    questions:state.chapter.questions,
+    answers:state.answers
+  }
+}
+
+
+export default connect(mapStateToProps,null)(AnserPage)
