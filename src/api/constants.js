@@ -1,1 +1,1 @@
-export const root_url="http://18.118.104.61/api";
+export const root_url="http://localhost:8080/api";

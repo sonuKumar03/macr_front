@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
 import { Container, Header } from 'semantic-ui-react';
-import { abi, home, tokenContractAddress } from '../Data';
-import { FETCH_CHAPTERS_REQUESTED, GAME_INIT } from './constants';
-import TokenList from './List/TokenList';
-import {setUserAddress} from '../../store/reducer'
-import {} from '../../store/constants'
 import Web3 from 'web3';
+import { abi, home, tokenContractAddress } from '../Data';
+import TokenList from './List/TokenList';
+import {LOAD_USER} from '../../store/constants'
+import { LOAD_CHAPTERS } from '../../store/chapters/constants';
 function UserLanding(props) {
+    const {fetchUser,fetchChapters,chapters} = props;
     const [userAddress,setuserAddress] = useState(null);
-    const {gameInitiate} = props
     useEffect(()=>{
         (async()=>{
             await metaMaskInit();
         })()
     },[])
-
+   
     useEffect(()=>{ 
         if(userAddress &&userAddress!==''){
-            gameInitiate(userAddress) ;
+            fetchUser(userAddress);
+            fetchChapters(userAddress);
         }
     },[userAddress])
 
@@ -28,7 +28,6 @@ function UserLanding(props) {
             console.log('MetaMask is installed!');
             let	 userAddress = ethereum.selectedAddress;
             setuserAddress(userAddress);
-            props.setUserAddress(userAddress);
         }else{
             alert("Install Metamask Extenions!")
         }
@@ -48,13 +47,12 @@ function UserLanding(props) {
             setuserAddress(address)
         }
     }
-
     const {shouldRedirect} = props;
     if(!shouldRedirect){
         return (
             <Container >
                     <Header color="teal" dividing textAlign="center" size="huge" >Wallet Id : {userAddress}</Header>
-                    <TokenList/>
+                        <TokenList/>
             </Container>
         )
     }else{
@@ -64,16 +62,15 @@ function UserLanding(props) {
 }
 const mapStateToProps = (state)=>{
     return {    
-        chapters:state.chapters
+        chapters:state.chapters,
+        user:state.global.user
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      fetchChapters: () => dispatch({type:FETCH_CHAPTERS_REQUESTED}),
-      gameInitiate:data=>dispatch({type:GAME_INIT,payload:data}),
-      setUserAddress:data=>dispatch(setUserAddress(data)),
-      dispatch
+        fetchUser:(data)=>dispatch({type:LOAD_USER,payload:data}),
+        fetchChapters:(data)=>dispatch({type:LOAD_CHAPTERS,payload:data})
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(UserLanding)

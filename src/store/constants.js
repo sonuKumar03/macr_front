@@ -1,2 +1,7 @@
-export const SET_USER_ID="SET_USER_ID"
-export const SET_USER_ADDRESS="SET_USER_ADDRESS";
+export const LOAD_USER="LOAD_USER";
+export const SET_USER ="SET_USER";
+
+export const SET_LOADING = "LOADING";
+export const SET_LOADED  = "LOADED";
+
+

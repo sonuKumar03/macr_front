@@ -1,21 +1,21 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { fetchChapters } from '../../api';
-import { saveChapters } from './chaptersReducer';
-import { FETCH_CHAPTERS_REQUESTED } from './constants';
-
-function* fetchUserDetails() {
+import { getUser } from '../api';
+import {LOAD_USER} from './constants'
+import {setUser} from './reducer'
+function* fetchUser(action) {
     try{
-        const response = yield call(fetchChapters);
-        const chapters = response.data.rows;
-        yield put(saveChapters(chapters));
+        // yield put(setIsLoading(true))
+        const response = yield call(getUser,action.payload);
+        yield put(setUser(response.data.rows[0]));
+        // yield put(setIsLoading(false))
     }catch(err){
       console.log(err);
     }
 }
 
+
 function* watchFetchChapter() {
-  yield takeLatest(FETCH_CHAPTERS_REQUESTED, fetchUserDetails);
+  yield takeLatest(LOAD_USER, fetchUser);
 }
 
 export default watchFetchChapter;
-

@@ -3,15 +3,18 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 import { Button, Container, Form, Header, Segment } from "semantic-ui-react";
-import { SUBMIT_ANSWER } from '../AnswersPage/constants';
-import { saveUserResponse } from "../GameRoom/chapterReducer";
+import { SAVE_ANSWERS } from "../../store/chapter/constants";
+import { saveUserResponse } from "../../store/chapter/reducer";
 import './Questions.css';
 function Question(props) {
-  const {saveUserResponse,questions=[],submitAnswer,userAddress,chapterId} = props;
+  const {chapter,saveUserResponse,global,submitAnswer} = props;
+  const {questions=[],userAddress,chapterId} = chapter;
+  const {user} = global;
   const [disabled,setDisabled] = useState(true);
   const handleChange = (e,q)=>{
     const {questionId,value} = e;
-    saveUserResponse({questionId,value:e});
+    const {question} =q;
+    saveUserResponse({questionId:question._id,value:e});
   }
 
   useEffect(()=>{
@@ -20,15 +23,15 @@ function Question(props) {
   },[questions])
 
   const handleSubmit = async()=>{
-    submitAnswer({questions,chapterId,userAddress});
+    submitAnswer({user,chapter});
   }
   return (
     <Container fluid>
     <Form>
       {questions.map((q, i) => (
         <Segment raised key={i}>
-          <Header>{q.label}</Header>
-          <Select value={q.userResponse} onChange={(e)=>handleChange(e,q)} isSearchable options={q.options} />
+          <Header>{q.question.question}</Header>
+          <Select  onChange={(e)=>handleChange(e,q)} isSearchable options={q.options} />
         </Segment>
       ))}
     </Form>
@@ -40,16 +43,15 @@ function Question(props) {
 }
 const mapStateToProps = (state)=>{
   return{
-    questions:state.chapter.questions,
-    userAddress:state.user,
-    chapterId:state.chapter.id
+    chapter:state.chapter,
+    global:state.global,
   }
 }
 
 const mapDispatchToProps = (dispatch)=>{
   return {
     saveUserResponse:(data)=>dispatch(saveUserResponse(data)),
-    submitAnswer:(data)=>dispatch({type:SUBMIT_ANSWER,payload:data})
+    submitAnswer:(data)=>dispatch({type:SAVE_ANSWERS,payload:data})
   }
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Question);

@@ -1,27 +1,29 @@
 import { configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
-import chapterReducer from '../components/GameRoom/chapterReducer';
-import chaptersReducer from '../components/user-landing/chaptersReducer';
-import userReducer from './reducer';
-import WatchGameInit from '../components/user-landing/gameInit_saga';
-import watchFetchChapter from '../components/user-landing/saga';
-import watchFetchChapterQuestions from '../components/GameRoom/GameSaga';
-import watchSubmitAnswer from '../components/AnswersPage/answerSaga';
-import answerReducer from '../components/AnswersPage/answerReducer';
+
+import  mainSaga from './saga' ;
+import chapterSaga from './chapter/saga';
+import chaptersSaga from './chapters/saga'
+import mainReducer from './reducer';
+import chaptersReducer from './chapters/reducer';
+import chapterReducer from './chapter/reducer';
+import answerReducer from './answers/reducer'
 const sagaMiddleware = createSagaMiddleware()
 
 const store =  configureStore({
       reducer: {
-            user:userReducer,
+            global:mainReducer,
             chapters:chaptersReducer,
             chapter:chapterReducer,
             answers:answerReducer
       },
-      middleware:[sagaMiddleware]
+      middleware:[sagaMiddleware],
 })
-sagaMiddleware.run(watchFetchChapter);
-sagaMiddleware.run(WatchGameInit);
-sagaMiddleware.run(watchFetchChapterQuestions);
-sagaMiddleware.run(watchSubmitAnswer);
+
+sagaMiddleware.run(mainSaga);
+sagaMiddleware.run(chapterSaga);
+sagaMiddleware.run(chaptersSaga);
+// sagaMiddleware.run(watchFetchChapterQuestions);
+// sagaMiddleware.run(watchSubmitAnswer);
 
 export default store;

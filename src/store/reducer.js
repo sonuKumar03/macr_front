@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-const userSlice = createSlice({
-    name:'user',
-    initialState:{
-        userId:null,
-        userAddress:null
-    },
+const { createSlice } = require("@reduxjs/toolkit");
+
+const reducer = createSlice({
+    name:"global",
+    initialState:{},
     reducers:{
-        setUserAddress:(state,action)=>{
-            return {...state,userAddress:action.payload}
+        setIsLoading:(state,action)=>{
+            return {
+                ...state,isloading:action.payload
+            };
         },
-        setUserId:(state,action)=>{
-            return {...state,userId:action.payload}
-        }
+        setUser:(state,action)=>{
+            return {...state,user:action.payload}
+        },
     }
 })
-export const { setUserAddress,setUserId } = userSlice.actions;
-export default userSlice.reducer;
+export const {setIsLoading,setUser} = reducer.actions;
+export default reducer.reducer;

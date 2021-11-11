@@ -1,1 +1,0 @@
-export const SUBMIT_ANSWER="SUBMIT_ANSWER";
