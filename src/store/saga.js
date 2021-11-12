@@ -6,7 +6,7 @@ function* fetchUser(action) {
     try{
         // yield put(setIsLoading(true))
         const response = yield call(getUser,action.payload);
-        yield put(setUser(response.data.rows[0]));
+        yield put(setUser(response.data.rows));
         // yield put(setIsLoading(false))
     }catch(err){
       console.log(err);
