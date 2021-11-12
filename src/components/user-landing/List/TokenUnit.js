@@ -4,8 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Grid, GridColumn, Progress } from 'semantic-ui-react';
 import spacetime from 'spacetime';
 import Web3 from 'web3';
-import { abi, tokenContractAddress } from '../../Data';
-// import { FETCH_CHAPTERS_QUESTIONS } from '../../GameRoom/constants';
+import { abi, tokenContractAddress,client_token } from '../../Data';
 
 function TokenUnit(props) {
     const { user,fetchQuestion,progress,lastAttempt,count} = props;
@@ -52,8 +51,8 @@ function TokenUnit(props) {
         const web3 = new Web3(Web3.givenProvider);
         const contract = new web3.eth.Contract(abi,tokenContractAddress);
         try{
-            // const result1 = await contract.methods.setApprovalForAll(tokenContractAddress,true).send({from:userAddress});
-            // const result2 = await contract.methods.safeTransferFrom(userAddress,client_token,token,1,0).call();
+            const result1 = await contract.methods.setApprovalForAll(tokenContractAddress,true).send({from:userAddress});
+            const result2 = await contract.methods.safeTransferFrom(userAddress,client_token,token,1,0).call();
             // fetchQuestion(id);
             history.push(`/game/${_id}`)
         }catch(err){
