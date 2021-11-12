@@ -2,7 +2,7 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const reducer = createSlice({
     name:"global",
-    initialState:{},
+    initialState:{isloading:false,user:{}},
     reducers:{
         setIsLoading:(state,action)=>{
             return {

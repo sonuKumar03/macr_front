@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Grid, Placeholder } from 'semantic-ui-react';
+import { Grid, Header, Placeholder } from 'semantic-ui-react';
 import TokenUnit from './TokenUnit';
 
 function TokenList(props) {
@@ -13,8 +13,29 @@ function TokenList(props) {
     return (
         <>
             {!isloading?(
-                <Grid className="m-grid" divided="vertically">
+                <Grid className="m-grid">
+
+            <Grid.Row verticalAlign="middle">
+                <Grid.Column width={3}>
+                    <Header as="h3" >Chapter Name</Header>
+            </Grid.Column>
+            <Grid.Column> 
+                <Header as="h3" >
+                Owned
+                </Header>
+                 </Grid.Column>
+            <Grid.Column width={5} verticalAlign="middle" >
+                <Header as="h3" > Progress in last attempt </Header>
+                </Grid.Column>
+            <Grid.Column>
+            </Grid.Column>
+            <Grid.Column width={4}>
+                <Header as="h3"  ></Header>
+            </Grid.Column>
+        </Grid.Row>
+
                 {
+
                     chapters.map((t,i)=>(
                         <TokenUnit key={i} {...t}/>
                     ))

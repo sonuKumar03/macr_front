@@ -9,6 +9,7 @@ import { LOAD_CHAPTERS } from '../../store/chapters/constants';
 function UserLanding(props) {
     const {fetchUser,fetchChapters,chapters} = props;
     const [userAddress,setuserAddress] = useState(null);
+    
     useEffect(()=>{
         (async()=>{
             await metaMaskInit();

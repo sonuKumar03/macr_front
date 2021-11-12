@@ -4,14 +4,16 @@ import { useHistory } from 'react-router-dom';
 import { Button, Grid, GridColumn, Progress } from 'semantic-ui-react';
 import spacetime from 'spacetime';
 import Web3 from 'web3';
-import { abi, client_token, tokenContractAddress } from '../../Data';
+import { abi, tokenContractAddress } from '../../Data';
 // import { FETCH_CHAPTERS_QUESTIONS } from '../../GameRoom/constants';
+
 function TokenUnit(props) {
     const { user,fetchQuestion,progress,lastAttempt,count} = props;
     const { href,title,id,token,_id} = props.chapter;
     const history = useHistory();
     const [now,setNow] = useState(null);
     const {userAddress} = user;
+
     useEffect(()=>{
         let t = setTimeout(()=>{
             setNow(spacetime.now());
@@ -33,6 +35,7 @@ function TokenUnit(props) {
         }
         return false;   
     }
+
     const beforeCooldown = ()=>{
         if(lastAttempt&&now){
             let dt = spacetime(lastAttempt,'utc');
@@ -49,8 +52,8 @@ function TokenUnit(props) {
         const web3 = new Web3(Web3.givenProvider);
         const contract = new web3.eth.Contract(abi,tokenContractAddress);
         try{
-            const result1 = await contract.methods.setApprovalForAll(tokenContractAddress,true).send({from:userAddress});
-            const result2 = await contract.methods.safeTransferFrom(userAddress,client_token,token,1,0).call();
+            // const result1 = await contract.methods.setApprovalForAll(tokenContractAddress,true).send({from:userAddress});
+            // const result2 = await contract.methods.safeTransferFrom(userAddress,client_token,token,1,0).call();
             // fetchQuestion(id);
             history.push(`/game/${_id}`)
         }catch(err){
@@ -79,7 +82,7 @@ function TokenUnit(props) {
 }
 const mapStateToProps  = (state)=>{
     return {
-        user:state.global.user,
+        user:state.global.user || { userAddress:''},
     }
 }
 
