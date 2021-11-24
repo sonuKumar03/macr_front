@@ -51,8 +51,8 @@ function TokenUnit(props) {
         const web3 = new Web3(Web3.givenProvider);
         const contract = new web3.eth.Contract(abi,tokenContractAddress);
         try{
-            const result1 = await contract.methods.setApprovalForAll(tokenContractAddress,true).send({from:userAddress});
-            const result2 = await contract.methods.safeTransferFrom(userAddress,client_token,token,1,0).call();
+            // const result1 = await contract.methods.setApprovalForAll(tokenContractAddress,true).send({from:userAddress});
+            // const result2 = await contract.methods.safeTransferFrom(userAddress,client_token,token,1,0).call();
             // fetchQuestion(id);
             history.push(`/game/${_id}`)
         }catch(err){

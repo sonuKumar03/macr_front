@@ -2,6 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { getUser } from '../api';
 import {LOAD_USER} from './constants'
 import {setUser} from './reducer'
+
 function* fetchUser(action) {
     try{
         // yield put(setIsLoading(true))
