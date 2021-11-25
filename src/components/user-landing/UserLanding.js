@@ -38,7 +38,7 @@ function UserLanding(props) {
                 let address = ethereum.selectedAddress;
                 const myWeb3 = new Web3(Web3.givenProvider);
                 const contract = await new myWeb3.eth.Contract(abi,tokenContractAddress);
-                const t = await contract.methods.setApprovalForAll(tokenContractAddress,true).call();
+                // const t = await contract.methods.setApprovalForAll(tokenContractAddress,true).call();
             }catch(err){
                 console.log(err);
             }
